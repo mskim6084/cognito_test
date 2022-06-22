@@ -11,7 +11,8 @@ router.get('/', (req,res) => {
 
 router.post('/', urlencodedParser,(req,res) => {
     console.log(req.body)
-    aws_cognito.RegisterUser()
+    const register = aws_cognito.RegisterUser()
+    console.log(register)
 })
 
 module.exports = router
