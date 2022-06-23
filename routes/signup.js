@@ -27,9 +27,10 @@ router.get('/verifyemail', (req,res) => {
 })
 
 router.post('/verifyemail', urlencodedParser, (req,res) => {
-    console.log(req)
     let confirmation_code = req.body.confirmation_code
-    aws_cognito.confirmEmail()
+    let username = req.body.username
+    aws_cognito.confirmEmail(username, confirmation_code,res)
+    //res.render('login')
 })
 
 module.exports = router

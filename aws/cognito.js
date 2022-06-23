@@ -41,8 +41,33 @@ function RegisterUser(username){
     })
 }
 
-function confirmEmail(){
-    console.log(userPool.getCurrentUser())
+function resendConfirmationCode(cognitoUser){
+    cognitoUser.resendConfirmationCode(function(err, result){
+        if (err){
+            console.log(err.message)
+        }
+        console.log(result)
+    })
+}
+
+function confirmEmail(username, confirmation_code,res){
+    let userData = {
+        Username: username,
+        Pool: userPool
+    }
+
+    let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData)
+    cognitoUser.confirmRegistration(confirmation_code, true, function(err, result){
+        if (err){
+            console.log(err.message)
+            res.redirect('/signup/verifyemail?user_name='+username)
+            resendConfirmationCode(cognitoUser)
+            return
+        }
+        console.log(result)
+        res.redirect('/')
+    })
+
 }
 
 async function Login(username,password,res){
