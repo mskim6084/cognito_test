@@ -28,4 +28,4 @@ const dashboardRouter = require('./routes/dashboard')
 app.use('/signup',signupRouter)
 app.use('/dashboard',dashboardRouter)
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
