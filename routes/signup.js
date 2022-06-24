@@ -5,7 +5,6 @@ const aws_cognito = require('../aws/cognito')
 const url = require('url')
 let username = "";
 const urlencodedParser = bodyParser.urlencoded({extended: false})
-
 router.get('/', (req,res) => {
     res.render('signup')
 })
