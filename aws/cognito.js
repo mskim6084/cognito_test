@@ -15,7 +15,7 @@ const pool_region = "us-east-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData)
 
-function RegisterUser(username){
+function RegisterUser(username,res){
     var attributeList = [];
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"email",Value:"andy.kim37@hotmail.com"}));
     /*
@@ -32,11 +32,12 @@ function RegisterUser(username){
     userPool.signUp(username, 'SamplePassword123!',attributeList,null,function(err, result){
         if (err){
             console.log(err)
+            res.redirect('/signup')
             return
         }
         //console.log("success in creating user!")
         cognitoUser = result.user
-        let user_name = cognitoUser.getUsername()
+        res.redirect('/signup/verify')
         //console.log('username is '+ cognitoUser.getUsername());
     })
 }
@@ -59,7 +60,7 @@ function confirmEmail(username, confirmation_code,res){
     cognitoUser.confirmRegistration(confirmation_code, true, function(err, result){
         if (err){
             console.log(err.message)
-            res.redirect('/signup/verifyemail?user_name='+username)
+            res.redirect('/signup/verify')
             resendConfirmationCode(cognitoUser)
             return
         }

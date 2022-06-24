@@ -3,7 +3,7 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const aws_cognito = require('../aws/cognito')
 const url = require('url')
-
+let username = "";
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 
 router.get('/', (req,res) => {
@@ -13,24 +13,29 @@ router.get('/', (req,res) => {
 router.post('/', urlencodedParser, (req,res) => {
     console.log(req.body)
     let user_name = req.body.username
-    aws_cognito.RegisterUser(user_name)
-    res.redirect(url.format({
-        pathname: '/signup/verifyemail',
-        query: {
-            "user_name":user_name
-        }
-    }))
+    username = req.body.username
+    aws_cognito.RegisterUser(user_name,res)
 })
 
-router.get('/verifyemail', (req,res) => {
-    res.render('verifyemail')
+router.get('/verify', isUsernameSet,(req,res) => {
+    res.render('verify')
 })
 
-router.post('/verifyemail', urlencodedParser, (req,res) => {
+router.post('/verify', urlencodedParser, isUsernameSet,(req,res) => {
     let confirmation_code = req.body.confirmation_code
-    let username = req.body.username
+    console.log(username, confirmation_code)
     aws_cognito.confirmEmail(username, confirmation_code,res)
-    //res.render('login')
+    username = ""
 })
+
+function isUsernameSet (req, res, next){
+    if (username === ""){
+        res.redirect('/')
+        return
+    }
+    next()
+}
+
+
 
 module.exports = router

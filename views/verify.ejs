@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="confirmation">
-        <form onsubmit='handleForm(event)' id='verifyForm' action="/signup/verifyemail" method="POST"> 
+        <form id='verifyForm' action="/signup/verify" method="POST"> 
                 <div>
                     <label for="confirmation_code">Confirmation Code: </label>
                     <input type="string" id="confirmation_code" name="confirmation_code" required>
