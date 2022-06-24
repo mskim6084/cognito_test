@@ -4,7 +4,9 @@ const AWS = require('aws-sdk');
 const request = require('request');
 const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
-require("dotenv").config()
+if (process.env.NODE_ENV !== "production"){
+    require("dotenv").config()
+}
 
 const poolData = {
     UserPoolId: process.env.COGNITO_USERPOOLID,
@@ -43,12 +45,16 @@ async function RegisterUser(username){
     })
 }
 
-function resendConfirmationCode(cognitoUser){
-    cognitoUser.resendConfirmationCode(function(err, result){
-        if (err){
-            console.log(err.message)
-        }
-        console.log(result)
+async function resendConfirmationCode(cognitoUser){
+    return new Promise((resolve, reject) => {
+        cognitoUser.resendConfirmationCode(function(err, result){
+            if (err){
+                console.log(err.message)
+                reject(err.message)
+            }
+            console.log(result)
+            resolve(result)
+        })
     })
 }
 
@@ -88,7 +94,7 @@ async function Login(username,password){
                 //console.log('access token + ' + result.getAccessToken().getJwtToken());
                 //console.log('id token + ' + result.getIdToken().getJwtToken());
                 //console.log('refresh token + ' + result.getRefreshToken().getToken());
-                resolve("SUCCESS")
+                resolve(result)
             },
             onFailure: function(err) {
                 //console.log(err);
