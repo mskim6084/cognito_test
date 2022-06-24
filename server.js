@@ -7,8 +7,8 @@ app.use(express.static("public"))
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 
 app.set('view engine', 'ejs')
-app.get('/', (req,res) => {
-    res.render("login")
+app.get('/', aws_cognito.isAuthenticated ,(req,res) => {
+    res.render('login')
 })
 
 app.post('/',urlencodedParser, (req,res) => {
@@ -17,6 +17,7 @@ app.post('/',urlencodedParser, (req,res) => {
 
 const signupRouter = require('./routes/signup')
 const dashboardRouter = require('./routes/dashboard')
+const e = require('express')
 
 app.use('/signup',signupRouter)
 app.use('/dashboard',dashboardRouter)

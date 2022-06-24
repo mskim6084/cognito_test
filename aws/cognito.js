@@ -55,7 +55,6 @@ function confirmEmail(username, confirmation_code,res){
         Username: username,
         Pool: userPool
     }
-
     let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData)
     cognitoUser.confirmRegistration(confirmation_code, true, function(err, result){
         if (err){
@@ -84,10 +83,10 @@ async function Login(username,password,res){
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.authenticateUser(authDetails, {
         onSuccess: function (result) {
-            console.log('access token + ' + result.getAccessToken().getJwtToken());
-            console.log('id token + ' + result.getIdToken().getJwtToken());
-            console.log('refresh token + ' + result.getRefreshToken().getToken());
-            res.redirect('dashboard')
+            //console.log('access token + ' + result.getAccessToken().getJwtToken());
+            //console.log('id token + ' + result.getIdToken().getJwtToken());
+            //console.log('refresh token + ' + result.getRefreshToken().getToken());
+            res.redirect('/dashboard')
         },
         onFailure: function(err) {
             console.log(err);
@@ -96,4 +95,39 @@ async function Login(username,password,res){
     });
 }
 
-module.exports = {RegisterUser, confirmEmail, Login}
+function getCurrUser(){
+    return userPool.getCurrentUser()
+}
+
+
+function signOutUser(res){
+    let currUser = userPool.getCurrentUser()
+    if (currUser !== null){
+        currUser.signOut()
+        res.redirect('/')
+    }
+    else{
+        console.log("No one is signed in")
+    }
+}
+
+//Middleware for the products
+function isAuthenticated(req,res,next){
+    const currUser = getCurrUser()
+    if (currUser !== null){
+        res.redirect('/dashboard')
+        return
+    }
+    next()
+}
+
+function isNotAuthenticated(req,res,next){
+    const currUser = getCurrUser()
+    if (currUser === null){
+        res.redirect('/')
+        return
+    }
+    next()
+}
+
+module.exports = {RegisterUser, confirmEmail, Login, getCurrUser, signOutUser, isAuthenticated,isNotAuthenticated}
