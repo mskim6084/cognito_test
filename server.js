@@ -11,13 +11,19 @@ app.get('/', aws_cognito.isAuthenticated ,(req,res) => {
     res.render('login')
 })
 
-app.post('/',urlencodedParser, (req,res) => {
-    aws_cognito.Login(req.body.username, req.body.password,res)
+app.post('/',urlencodedParser, async (req,res) => {
+    try{
+        let value = await aws_cognito.Login(req.body.username, req.body.password)
+        console.log(value)
+        res.redirect('/dashboard')
+    }catch(error){
+        console.log(error.message)
+        res.redirect('/')
+    }
 })
 
 const signupRouter = require('./routes/signup')
 const dashboardRouter = require('./routes/dashboard')
-const e = require('express')
 
 app.use('/signup',signupRouter)
 app.use('/dashboard',dashboardRouter)

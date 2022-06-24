@@ -15,7 +15,7 @@ const pool_region = "us-east-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData)
 
-function RegisterUser(username,res){
+async function RegisterUser(username){
     var attributeList = [];
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"email",Value:"andy.kim37@hotmail.com"}));
     /*
@@ -29,16 +29,17 @@ function RegisterUser(username,res){
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"phone_number",Value:"+5412614324321"}));
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"custom:scope",Value:"admin"}));
     */
-    userPool.signUp(username, 'SamplePassword123!',attributeList,null,function(err, result){
-        if (err){
-            console.log(err)
-            res.redirect('/signup')
-            return
-        }
-        //console.log("success in creating user!")
-        cognitoUser = result.user
-        res.redirect('/signup/verify')
-        //console.log('username is '+ cognitoUser.getUsername());
+
+    return new Promise((resolve, reject) => {
+        userPool.signUp(username, 'SamplePassword123!',attributeList,null,function(err, result){
+            if (err){
+                console.log(err)
+                reject(err.message)
+            }
+            //console.log("success in creating user!")
+            resolve(result)
+            //console.log('username is '+ cognitoUser.getUsername());
+        })
     })
 }
 
@@ -51,26 +52,26 @@ function resendConfirmationCode(cognitoUser){
     })
 }
 
-function confirmEmail(username, confirmation_code,res){
+async function confirmEmail(username, confirmation_code){
     let userData = {
         Username: username,
         Pool: userPool
     }
-    let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData)
-    cognitoUser.confirmRegistration(confirmation_code, true, function(err, result){
-        if (err){
-            console.log(err.message)
-            res.redirect('/signup/verify')
-            resendConfirmationCode(cognitoUser)
-            return
-        }
-        console.log(result)
-        res.redirect('/')
+    return new Promise((resolve, reject)=> {
+        let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData)
+        cognitoUser.confirmRegistration(confirmation_code, true, function(err, result){
+            if (err){
+                console.log(err.message)
+                reject(err.message)
+            }
+            console.log(result)
+            resolve(result)
+        })
     })
 
 }
 
-async function Login(username,password,res){
+async function Login(username,password){
     var authDetails = new AmazonCognitoIdentity.AuthenticationDetails({
         Username: username,
         Password: password
@@ -80,20 +81,21 @@ async function Login(username,password,res){
         Username : username,
         Pool : userPool
     };
-
-    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.authenticateUser(authDetails, {
-        onSuccess: function (result) {
-            //console.log('access token + ' + result.getAccessToken().getJwtToken());
-            //console.log('id token + ' + result.getIdToken().getJwtToken());
-            //console.log('refresh token + ' + result.getRefreshToken().getToken());
-            res.redirect('/dashboard')
-        },
-        onFailure: function(err) {
-            console.log(err);
-            res.redirect('/')
-        },
-    });
+    return new Promise((resolve,reject) => {
+        var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+        cognitoUser.authenticateUser(authDetails, {
+            onSuccess: function (result) {
+                //console.log('access token + ' + result.getAccessToken().getJwtToken());
+                //console.log('id token + ' + result.getIdToken().getJwtToken());
+                //console.log('refresh token + ' + result.getRefreshToken().getToken());
+                resolve("SUCCESS")
+            },
+            onFailure: function(err) {
+                //console.log(err);
+                reject(err)
+            },
+        });
+    })
 }
 
 function getCurrUser(){
