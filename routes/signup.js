@@ -6,7 +6,9 @@ const url = require('url')
 let username = "";
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 router.get('/', (req,res) => {
-    res.render('signup')
+    res.render('signup', {
+        message:req.flash('message')
+    })
 })
 
 router.post('/', urlencodedParser, async (req,res) => {
@@ -15,16 +17,20 @@ router.post('/', urlencodedParser, async (req,res) => {
         let user_name = req.body.username
         username = req.body.username
         let value = await aws_cognito.RegisterUser(user_name)
+        req.flash('message',value)
         console.log(value)
         res.redirect('/signup/verify')
     } catch(error){
         console.log(error)
+        req.flash('message',error)
         res.redirect('/signup')
     }
 })
 
 router.get('/verify', isUsernameSet,(req,res) => {
-    res.render('verify')
+    res.render('verify', {
+        message:req.flash('message')
+    })
 })
 
 router.post('/verify', urlencodedParser, isUsernameSet,async (req,res) => {
@@ -33,10 +39,12 @@ router.post('/verify', urlencodedParser, isUsernameSet,async (req,res) => {
         console.log(username, confirmation_code)
         let value = await aws_cognito.confirmEmail(username, confirmation_code)
         console.log(value)
+        req.flash('message',value)
         username = ""
         res.redirect('/')
     } catch(error){
         console.log(error)
+        req.flash('message',error)
         res.redirect('/signup/verify')
     }
 })

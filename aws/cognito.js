@@ -94,11 +94,11 @@ async function Login(username,password){
                 //console.log('access token + ' + result.getAccessToken().getJwtToken());
                 //console.log('id token + ' + result.getIdToken().getJwtToken());
                 //console.log('refresh token + ' + result.getRefreshToken().getToken());
-                resolve(result)
+                resolve(result.getAccessToken().getJwtToken())
             },
             onFailure: function(err) {
                 //console.log(err);
-                reject(err)
+                reject(err.message)
             },
         });
     })
