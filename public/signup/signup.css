@@ -1,12 +1,38 @@
-.email_password_field{
-    width: 100px;
-    height: 100px;
-    
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
+body{
+    min-height: 800px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width:100vw;
+    height: 100vh;
+    background-image: url('img/signup_background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center center;
+    position: relative;
+}
+.signup_field{
+    min-height: 500px;
+    min-width: 400px;
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 54px 55px, rgba(0, 0, 0, 0.25) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 10px;
+    background-color: white;
+    vertical-align: middle;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    height: 80vh;
+    width: 35vw;
+}
+
+.signup_text{
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    text-align: center;
+}
+
+@media (max-height: 700px){
+    body{
+        overflow-y: auto;
+    }
 }
