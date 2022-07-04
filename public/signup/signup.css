@@ -11,7 +11,8 @@ body{
     position: relative;
 }
 .signup_field{
-    min-height: 500px;
+    min-height: 650px;
+    max-height: 650px;
     min-width: 400px;
     box-shadow: rgba(0, 0, 0, 0.7) 0px 54px 55px, rgba(0, 0, 0, 0.25) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border-radius: 10px;
@@ -21,8 +22,9 @@ body{
     left: 50%; 
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 80vh;
+    height: 75vh;
     width: 35vw;
+    transition: 0.5s;
 }
 
 .signup_text{
@@ -123,5 +125,11 @@ form .txt_field{
 @media (max-height: 700px){
     body{
         overflow-y: auto;
+    }
+}
+
+@media (max-width: 1000px){
+    .signup_field{
+        width: 70vw;
     }
 }
