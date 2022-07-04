@@ -12,39 +12,50 @@
     <title>Cognito Signup</title>
 </head>
 <body>
-    <%=message%>
+    
     <div class="signup_field">
         <div class="signup_text">
             <h1>Sign Up</h1>
+            <%=message%>
         </div>
-        <form id='register_form' action="/signup" method="POST"> 
-                <div>
-                    <label for="first_name">First Name: </label>
-                    <input type="string" id="first_name" name="first_name" required>
-                </div>
-                <div>
-                    <label for="last_name">Last Name: </label>
-                    <input type="string" id="last_name" name="last_name"  required>
-                </div>
-                <div>
-                    <label for="username">Username: </label>
-                    <input type="string" id="username" name="username"  required>
-                </div>
-                <div>
-                    <label for="email">Email: </label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="password">Password: </label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div>
-                    <label for="confirmPassword">Confirm Password: </label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                <button type="submit">Sign Up</button>
-        </form>
-        <a href="/">Log in</a>
+        <div class="signup_div">
+            <form id='register_form' action="/signup" method="POST"> 
+                    <div class="txt_field">
+                        <input type="string" id="first_name" name="first_name" required>
+                        <span></span>
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="string" id="last_name" name="last_name"  required>
+                        <span></span>
+                        <label for="last_name">Last Name</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="string" id="username" name="username"  required>
+                        <span></span>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="email" id="email" name="email" required>
+                        <span></span>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" id="password" name="password" required>
+                        <span></span>
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <span></span>
+                        <label for="confirmPassword">Confirm Password</label>
+                    </div>
+                    <div class="btns">
+                        <button type="submit">Sign Up</button>
+                        <button onclick="window.location.href='/'">Back to Login</a></button>
+                    </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
