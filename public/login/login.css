@@ -40,7 +40,7 @@ body{
 }
 
 .welcome_sign{
-    margin-top: 10%;
+    margin-top: 5%;
     font-family: 'Pacifico', cursive;
     font-size: 25px;
     text-align: center;
@@ -48,6 +48,38 @@ body{
 
 .welcome_sign h1 {
     margin: 0;
+    padding: 5px 10px;
+}
+
+.alert{
+    transition: 0.5s;
+    border-radius: 10px;
+    min-height: 30px;
+    text-align: center;
+    background-color: #ffdb9b;
+    border-left: 8px solid #ffa502;
+    position: relative;
+    padding-top: 2vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 4vh;
+    width: 100%;
+}
+
+.alert .fa-exclamation-circle{
+    position: absolute;
+    left: 10px;
+    top:50%;
+    transform: translateY(-47%);
+    color: #ce8500;
+    font-size: 23px;
+}
+
+.alert .msg{
+    padding-left: 5px;
+    width:fit-content;
+    font-size: 15px;
+    color: #ce8500;
 }
 
 .login_form{
@@ -55,7 +87,7 @@ body{
     height:100%;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 45%;
     transform: translate(-50%, -45%);
 }
 

@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <title>Cognito Login</title>
 </head>
 <body>
@@ -20,8 +21,13 @@
                 <h1>Welcome</h1>
             </div>
             <div class="login_wrapper">
-                <%=message%>
                 <div class="login_form">
+                    <% if ( message.length > 0 ) { %>
+                        <div class="alert">
+                            <span class="fas fa-exclamation-circle"></span>
+                            <span class="msg"><%=message%></span> 
+                        </div>
+                      <% } %>
                     <form action="/" method="POST"> 
                             <div class="txt_field">
                                 <input type="string" id="username" name="username" required>
