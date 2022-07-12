@@ -24,7 +24,23 @@ app.get('/', aws_cognito.isAuthenticated ,(req,res) => {
 
 app.post('/',urlencodedParser, async (req,res) => {
     try{
-        let value = await aws_cognito.Login(req.body.username, req.body.password)
+        let username = req.body.username
+        const password = req.body.password
+
+        if(username === null || username.length < 1){
+            req.flash('message','Username cannot be empty');
+            return
+        }
+        else if(password === null || password.length < 1){
+            req.flash('message','Password cannot be empty');
+            return
+        }
+
+        username = username.trim()
+        username = username.replace(/\s/g,'');
+        username = username.toLowerCase();
+ 
+        let value = await aws_cognito.Login(username, password)
         console.log(value)
         req.flash('message',value)
         res.redirect('/dashboard')
