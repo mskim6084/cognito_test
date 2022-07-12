@@ -29,21 +29,21 @@ app.post('/',urlencodedParser, async (req,res) => {
 
         if(username === null || username.length < 1){
             req.flash('message','Username cannot be empty');
-            return
+            res.redirect('/')
         }
         else if(password === null || password.length < 1){
             req.flash('message','Password cannot be empty');
-            return
+            res.redirect('/')
         }
-
-        username = username.trim()
-        username = username.replace(/\s/g,'');
-        username = username.toLowerCase();
- 
-        let value = await aws_cognito.Login(username, password)
-        console.log(value)
-        req.flash('message',value)
-        res.redirect('/dashboard')
+        else{
+            username = username.trim()
+            username = username.replace(/\s/g,'');
+            username = username.toLowerCase();
+            let value = await aws_cognito.Login(username, password)
+            console.log(value)
+            req.flash('message',value)
+            res.redirect('/dashboard')
+        }
     }catch(error){
         console.log(error)
         req.flash('message',error)

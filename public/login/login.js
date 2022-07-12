@@ -36,7 +36,6 @@ function handleForm(e){
                 errormsg.innerHTML = "Password cannot be empty."
             }
         }
-
         return
     }
 
