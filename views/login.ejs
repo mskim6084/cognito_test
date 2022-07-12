@@ -29,25 +29,25 @@
                       <% } %>
                     <form onsubmit='handleForm(event)' id="login_form" action="/" method="POST"> 
                             <div class="txt_field">
-                                <input type="string" id="username" name="username" >
+                                <input type="string" id="username" name="username" required>
                                 <span></span>
                                 <label for="username">Username</label>
                             </div>
                             <div class="txt_field">
-                                <input type="password" id="password" name="password" >
+                                <input type="password" id="password" name="password" required>
                                 <span></span>
                                 <label for="password">Password</label>
                             </div>
                             <div class="btn_wrapper">
                                 <button class="login_btn" type="submit">Login</button>
                             </div>
-                            <div class="btn_wrapper" id="forgotpassword_wrapper">
-                                <button class="forgot_password_btn">Forgot Password</button>
-                            </div>
-                            <div class="btn_wrapper"> 
-                                <button onclick="window.location.href='/signup'">Sign Up</a></button>
-                            </div>
                     </form>
+                    <div class="btn_wrapper" id="forgotpassword_wrapper">
+                        <button class="forgot_password_btn">Forgot Password</button>
+                    </div>
+                    <div class="btn_wrapper"> 
+                        <button onclick="window.location.href='/signup'">Sign Up</a></button>
+                    </div>
                 </div>
             </div>
         </div>
